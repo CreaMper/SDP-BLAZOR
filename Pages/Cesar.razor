@@ -1,0 +1,53 @@
+﻿@page "/cesar"
+
+<h3>Cesar Code Coder</h3>
+
+<div class="row" style="height: 300px">
+    <div class="col-6 h-40">
+        <textarea class="form-control h-100" @bind="_rawCode" @bind:event="oninput"></textarea>
+    </div>
+    <div class="col-6 h-40">
+        @_cesarCode
+    </div>
+</div>
+
+<div class="form-row">
+    <div>
+        <label>Move by: </label>
+        <input type="number" class="form-control" style="width: 200px;" placeholder="1" @bind="_rate" />
+        <button class="btn btn-primary" @onclick="CodeIt">
+            <span class="oi oi-clock" aria-hidden="true"></span> CODE IT!
+        </button>
+    </div>
+</div>
+
+
+@code {
+    string _rawCode = string.Empty;
+    string _cesarCode = null;
+    double? _rate = 1;
+
+    public void CodeIt()
+    {
+        if (_rate >= 0)
+        {
+            _cesarCode = "";
+            foreach (char sign in _rawCode)
+            {
+                char asc = char.IsUpper(sign) ? 'A' : 'a';
+                char temp = (char)((((sign + _rate) - asc) % 26) + asc);
+                _cesarCode += temp;
+            }
+        } else
+        {
+            _cesarCode = "";
+            double? minusRate = 26 - _rate;
+            foreach (char sign in _rawCode)
+            {
+                char asc = char.IsUpper(sign) ? 'A' : 'a';
+                char temp = (char)((((sign + minusRate) - asc) % 26) + asc);
+                _cesarCode += temp;
+            }
+        }
+    }
+}
