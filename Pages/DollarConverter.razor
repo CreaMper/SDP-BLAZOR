@@ -1,0 +1,39 @@
+﻿<div class="form-group">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Ammount: </label>
+            <input type="number" class="form-control" placeholder="$$$" @bind="_pln" />
+
+            <label>Rate: </label>
+            <input type="number" class="form-control" placeholder="3.96" @bind="_rate" />
+        </div>
+        <button class="btn btn-primary" @onclick="Calculate">
+            <span class="oi oi-clock" aria-hidden="true"></span> Convert
+        </button>
+    </div>
+
+    @if (_dollars != null)
+    {
+        <div class="row blockquote mt-5">
+            <span>With @_pln PLN in your pocket and with rate of @_rate per one USD , you have @_dollars USD overall.    </span>
+        </div>
+    }
+
+</div>
+
+@code {
+    double? _pln = null;
+    double? _rate = 3.96;
+    double? _dollars = null;
+
+    private void Calculate()
+    {
+        if ( _rate != 3.96)
+        {
+            _dollars = _pln * _rate;
+        } else
+        {
+            _dollars = _pln * 3.96;
+        }
+    }
+}
